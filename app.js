@@ -221,7 +221,7 @@ async function boot() {
   setSwitch(el("btn-music"), false, "开", "关");
   setSwitch(el("btn-sfx"), true, "开", "关");
 
-  const res = await fetch("sync.json?v=5");
+  const res = await fetch("sync.json?v=6");
   const data = await res.json();
   data.lines.forEach((l) => { l._times = lineTimes(l); });
   sync = data;
