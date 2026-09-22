@@ -1,5 +1,3 @@
-import { unlockAudio, audio } from "./audio.js";
-
 const ISLAND = "卡通欢乐岛";
 const WEDDING = {
   names: "曾嘉慧 ♥ 陆峰浩",
@@ -13,7 +11,7 @@ const scenes = {
   letter: el("scene-letter"),
 };
 
-const state = { musicOn: false, sfxOn: true, broadcastOn: true, started: false };
+const state = { soundOn: true };
 const video = el("character");
 let sync = null;
 
@@ -29,29 +27,6 @@ function setSwitch(btn, on, onText, offText) {
   btn.classList.toggle("on", on);
   btn.querySelector("b").textContent = on ? onText : offText;
 }
-
-async function armAudio() {
-  if (state.started) return;
-  state.started = true;
-  await unlockAudio();
-  audio().voice.enabled = state.sfxOn;
-  if (state.musicOn) audio().bgm.start();
-}
-
-el("btn-music").addEventListener("click", async () => {
-  await unlockAudio();
-  state.musicOn = !state.musicOn;
-  setSwitch(el("btn-music"), state.musicOn, "开", "关");
-  if (state.musicOn) audio().bgm.start();
-  else audio().bgm.stop();
-});
-
-el("btn-sfx").addEventListener("click", async () => {
-  await unlockAudio();
-  state.sfxOn = !state.sfxOn;
-  setSwitch(el("btn-sfx"), state.sfxOn, "开", "关");
-  audio().voice.enabled = state.sfxOn;
-});
 
 el("btn-direct").addEventListener("click", () => enterLetter());
 
@@ -96,9 +71,8 @@ function typeArrival(text) {
   step();
 }
 
-scenes.arrival.addEventListener("click", async (e) => {
+scenes.arrival.addEventListener("click", (e) => {
   if (e.target.closest("button")) return;
-  await armAudio();
   if (arrivalStage === 0) {
     setArrivalStage(1);
     typeArrival("咦？好像有个礼物飘过来了～");
@@ -111,7 +85,6 @@ scenes.arrival.addEventListener("click", async (e) => {
     return;
   }
   if (arrivalStage === 1) {
-    audio().voice.chime(784);
     setArrivalStage(2);
   } else {
     enterBroadcast();
@@ -157,18 +130,16 @@ function follow() {
   if (lineIdx === sync.lines.length - 1 && t >= last.videoEnd + 1.4) enterLetter();
 }
 
-async function enterBroadcast() {
+function enterBroadcast() {
   window.clearTimeout(arrivalTimer);
   show("broadcast");
-  await armAudio();
-  audio().bgm.stop();
-  video.muted = !state.broadcastOn;
+  video.muted = !state.soundOn;
   lineIdx = 0;
   paused = false;
   el("btn-pause").querySelector("b").textContent = "暂停";
   paintLine();
   video.currentTime = sync.lines[0]._times[0];
-  await video.play().catch(() => {});
+  video.play().catch(() => {});
   cancelAnimationFrame(raf);
   follow();
 }
@@ -191,10 +162,10 @@ el("btn-pause").addEventListener("click", () => {
   el("btn-pause").querySelector("b").textContent = paused ? "继续" : "暂停";
 });
 
-el("btn-voice").addEventListener("click", () => {
-  state.broadcastOn = !state.broadcastOn;
-  video.muted = !state.broadcastOn;
-  el("btn-voice").querySelector("b").textContent = state.broadcastOn ? "广播静音" : "广播播放";
+el("btn-sound").addEventListener("click", () => {
+  state.soundOn = !state.soundOn;
+  video.muted = !state.soundOn;
+  setSwitch(el("btn-sound"), state.soundOn, "开", "关");
 });
 
 el("btn-skip").addEventListener("click", () => enterLetter());
@@ -205,10 +176,8 @@ function enterLetter() {
   cancelAnimationFrame(raf);
   paused = true;
   video.pause();
-  if (state.musicOn) audio().bgm.start();
   show("letter");
   el("letter-card").classList.add("open");
-  audio().voice.chime(1318);
 }
 
 /* ---------- 启动 ---------- */
@@ -218,10 +187,10 @@ async function boot() {
   el("bcast-caption").textContent = `${ISLAND} · 特别广播`;
   el("w-names").textContent = WEDDING.names;
   el("w-place").textContent = WEDDING.place;
-  setSwitch(el("btn-music"), false, "开", "关");
-  setSwitch(el("btn-sfx"), true, "开", "关");
+  setSwitch(el("btn-sound"), true, "开", "关");
+  video.muted = false;
 
-  const res = await fetch("sync.json?v=6");
+  const res = await fetch("sync.json?v=7");
   const data = await res.json();
   data.lines.forEach((l) => { l._times = lineTimes(l); });
   sync = data;
