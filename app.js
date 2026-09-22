@@ -20,7 +20,7 @@ function preloadBlip() {
   try {
     ensureCtx();
     if (blipBuf) return;
-    fetch("blip.m4a?v=25")
+    fetch("blip.m4a?v=26")
       .then((r) => r.arrayBuffer())
       .then((b) => ac.decodeAudioData(b))
       .then((buf) => { blipBuf = buf; })
@@ -99,11 +99,6 @@ const stage = el("sky-stage");
 const rig = el("rig"), balloon = el("balloon"), tether = el("tether");
 const gift = el("gift"), invite = el("invite"), ground = el("ground");
 const sling = el("sling"), pebble = el("pebble"), fxBox = el("fx"), flash = el("flash");
-const craft = el("craft");
-const cursor = el("craft-cursor");
-const track = craft.querySelector(".craft-track");
-const zone = craft.querySelector(".craft-zone");
-
 let arrivalStage = 0;
 let busy = false;
 
@@ -184,42 +179,19 @@ function fire() {
     window.setTimeout(() => { flash.classList.remove("go"); stage.classList.remove("shake"); }, 300);
     leaves(9);
     window.setTimeout(() => {
+      gift.classList.add("open");
+      invite.classList.add("rise", "glow");
+    }, 1120);
+    window.setTimeout(() => {
       busy = false;
       arrivalStage = 2;
-      craft.hidden = false;
-      requestAnimationFrame(() => craft.classList.add("show"));
-      cursor.classList.add("run");
-      say("点一下，把游标停在绿色里！");
-    }, 940);
+      el("arrival-hint").hidden = true;
+      el("btn-open").hidden = false;
+      say("获得了一张请柬！", true);
+    }, 1980);
   });
 }
 
-function judge() {
-  const c = cursor.getBoundingClientRect(), t = track.getBoundingClientRect(), z = zone.getBoundingClientRect();
-  const mid = c.left + c.width / 2;
-  if (mid < z.left || mid > z.right) {
-    craft.classList.add("bad");
-    window.setTimeout(() => craft.classList.remove("bad"), 330);
-    say("差一点点，再来一次～");
-    return;
-  }
-  busy = true;
-  cursor.style.left = `${(mid - t.left).toFixed(1)}px`;
-  cursor.classList.remove("run");
-  craft.classList.add("ok");
-  burst(centerIn(gift), 14);
-  say("制作成功！");
-  window.setTimeout(() => { arrivalStage = 3; gift.classList.add("open"); invite.classList.add("rise", "glow"); }, 430);
-  window.setTimeout(() => {
-    arrivalStage = 4;
-    busy = false;
-    craft.classList.remove("show");
-    window.setTimeout(() => { craft.hidden = true; }, 320);
-    el("arrival-hint").hidden = true;
-    el("btn-open").hidden = false;
-    say("获得了一张请柬！", true);
-  }, 1280);
-}
 
 const arrivalText = el("arrival-text");
 let arrivalTimer = 0;
@@ -275,8 +247,6 @@ scenes.arrival.addEventListener("click", (e) => {
     say("再点一下，把气球射下来！");
   } else if (arrivalStage === 1) {
     fire();
-  } else if (arrivalStage === 2) {
-    judge();
   } else {
     toBroadcast();
   }
@@ -325,7 +295,6 @@ function follow() {
 
 function enterBroadcast() {
   window.clearTimeout(arrivalTimer);
-  cursor.classList.remove("run");
   show("broadcast");
   video.muted = !state.soundOn;
   lineIdx = 0;
@@ -375,7 +344,6 @@ el("btn-skip").addEventListener("click", () => enterLetter());
 function enterLetter() {
   cancelAnimationFrame(raf);
   paused = true;
-  cursor.classList.remove("run");
   video.pause();
   show("letter");
   el("letter-card").classList.add("open");
@@ -393,7 +361,7 @@ async function boot() {
   setSwitch(el("btn-sound"), true, "开", "关");
   video.muted = false;
 
-  const res = await fetch("sync.json?v=25");
+  const res = await fetch("sync.json?v=26");
   const data = await res.json();
   data.lines.forEach((l) => { l._times = lineTimes(l); });
   sync = data;

@@ -1,6 +1,6 @@
 @font-face {
   font-family: "ACNH Round";
-  src: url("acnh-round.woff2?v=25") format("woff2");
+  src: url("acnh-round.woff2?v=26") format("woff2");
   font-weight: 100 900;
   font-display: swap;
 }
@@ -277,36 +277,7 @@ button { cursor: pointer; border: 0; background: none; }
   75% { transform: translate(-3px, 2px); }
 }
 
-/* DIY 制作条 */
-.craft {
-  position: absolute;
-  left: 50%;
-  bottom: 158px;
-  width: 216px;
-  margin-left: -108px;
-  text-align: center;
-  opacity: 0;
-  transform: translateY(10px);
-  transition: opacity 0.3s, transform 0.3s;
-  z-index: 4;
-}
-.craft.show { opacity: 1; transform: none; }
-.craft-track {
-  position: relative;
-  height: 22px;
-  border-radius: 12px;
-  background: #fffaf0;
-  box-shadow: inset 0 0 0 2px #e6dcc0, var(--panel);
-  overflow: hidden;
-}
-.craft-zone { position: absolute; left: 37%; width: 26%; top: 0; bottom: 0; background: #8fd06e; border-radius: 5px; transition: background 0.2s; }
-.craft-cursor { position: absolute; left: 2%; top: -2px; bottom: -2px; width: 11px; border-radius: 6px; background: #e8564b; box-shadow: 0 0 0 2px #fffaf0; }
-.craft-cursor.run { animation: sweep 820ms cubic-bezier(0.45, 0, 0.55, 1) infinite alternate; }
-@keyframes sweep { from { left: 2%; } to { left: 93%; } }
-.craft.ok .craft-zone { background: #eab94a; }
-.craft.bad .craft-track { animation: nudge 300ms; }
-@keyframes nudge { 0%,100% { transform: translateX(0); } 25% { transform: translateX(-7px); } 60% { transform: translateX(6px); } }
-.craft-label { margin-top: 7px; font-size: 11px; font-weight: 700; letter-spacing: 0.18em; color: #6d8a5f; }
+25% { transform: translateX(-7px); } 60% { transform: translateX(6px); } }
 
 
 /* ---------- 气泡 ---------- */
