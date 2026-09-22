@@ -127,7 +127,7 @@ function follow() {
     paintLine();
   }
   const last = sync.lines[sync.lines.length - 1];
-  if (lineIdx === sync.lines.length - 1 && t >= last.videoEnd + 1.4) enterLetter();
+  if (lineIdx === sync.lines.length - 1 && (t >= last.videoEnd + 0.8 || video.ended)) enterLetter();
 }
 
 function enterBroadcast() {
@@ -190,7 +190,7 @@ async function boot() {
   setSwitch(el("btn-sound"), true, "开", "关");
   video.muted = false;
 
-  const res = await fetch("sync.json?v=7");
+  const res = await fetch("sync.json?v=8");
   const data = await res.json();
   data.lines.forEach((l) => { l._times = lineTimes(l); });
   sync = data;
