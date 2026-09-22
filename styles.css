@@ -1,3 +1,10 @@
+@font-face {
+  font-family: "ACNH Round";
+  src: url("acnh-round.woff2?v=24") format("woff2");
+  font-weight: 100 900;
+  font-display: swap;
+}
+
 * { box-sizing: border-box; }
 
 :root {
@@ -9,6 +16,8 @@
   --cream-edge: #e6dcc0;
   /* 实测：原片面板是平涂 + 柔投影，没有硬厚底边 */
   --panel: 0 4px 14px rgba(96,84,52,.15);
+  --canvas: radial-gradient(circle, rgba(196,184,158,.11) 1.4px, transparent 1.5px) 0 0 / 28px 28px,
+            radial-gradient(circle, rgba(196,184,158,.07) 0.9px, transparent 1px) 7px 7px / 14px 14px;
   --panel-lg: 0 9px 24px rgba(96,84,52,.19);
   --gold: #eab94a;
   --ink: #4d4436;
@@ -16,7 +25,7 @@
   --red: #e8564b;
   --wood: #c58a45;
   /* 圆体-简 是 iOS/macOS 系统字体：iPhone 零下载就是动森那种圆头字 */
-  --font: "Yuanti SC", "圆体-简", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  --font: "ACNH Round", "Yuanti SC", "圆体-简", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
 }
 
 html, body {
@@ -63,16 +72,16 @@ button { cursor: pointer; border: 0; background: none; }
   gap: 5px;
   padding: 9px 15px;
   border-radius: 999px;
-  background: var(--cream);
+  background: var(--canvas), var(--cream);
   border: 1px solid var(--cream-edge);
-  box-shadow: 0 2px 0 rgba(190,176,134,.5), var(--panel);
+  box-shadow: 0 4px 0 #ddd0ab, var(--panel);
   font-size: 13px;
   font-weight: 600;
   letter-spacing: 0.02em;
   color: var(--ink);
   transition: transform 0.12s, box-shadow 0.12s, background 0.2s;
 }
-.pill:active { transform: translateY(1px); box-shadow: 0 0 0 rgba(0,0,0,0), 0 1px 6px rgba(96,84,52,.12); }
+.pill:active { transform: translateY(3px); box-shadow: 0 1px 0 #ddd0ab; }
 .pill i { font-style: normal; font-weight: 800; }
 .pill.on { background: #fff8e0; border-color: var(--gold); }
 .pill-jump { padding-block: 10px; }
@@ -375,10 +384,10 @@ button { cursor: pointer; border: 0; background: none; }
   font-size: 15px;
   font-weight: 800;
   letter-spacing: 0.06em;
-  box-shadow: var(--panel-lg);
+  box-shadow: 0 5px 0 #d9a83f, var(--panel-lg);
   transition: transform 0.12s, box-shadow 0.12s;
 }
-.cta:active { transform: translateY(2px); box-shadow: 0 2px 8px rgba(0,0,0,.10); }
+.cta:active { transform: translateY(4px); box-shadow: 0 1px 0 #d9a83f; }
 .cta i { font-style: normal; }
 .bubble .cta { display: inline-block; margin-top: 12px; }
 [hidden] { display: none !important; }
@@ -388,9 +397,9 @@ button { cursor: pointer; border: 0; background: none; }
   color: #fdf6e2;
   padding: 11px 24px;
   font-size: 14px;
-  box-shadow: 0 3px 0 #3d6f3a, var(--panel);
+  box-shadow: 0 5px 0 #356033, var(--panel);
 }
-.cta-green:active { transform: translateY(2px); box-shadow: 0 1px 0 #3d6f3a, 0 2px 8px rgba(0,0,0,.10); }
+.cta-green:active { transform: translateY(4px); box-shadow: 0 1px 0 #356033; }
 
 /* 开场气泡前的小礼物角标 */
 .bubble-text.has-gift::before {
@@ -496,7 +505,7 @@ button { cursor: pointer; border: 0; background: none; }
   font-size: 14px;
   font-weight: 800;
   letter-spacing: 0.1em;
-  box-shadow: 0 2px 0 rgba(196,144,31,.45), var(--panel);
+  box-shadow: 0 4px 0 #d9a83f, var(--panel);
 }
 .bubble-lg { min-height: 0; text-align: left; padding: 28px 22px 30px; cursor: pointer; }
 .bubble-lg .bubble-text { font-size: 20px; min-height: 3.7em; }
@@ -567,7 +576,7 @@ button { cursor: pointer; border: 0; background: none; }
   margin-top: 10px;
   padding: 13px 16px;
   border-radius: 20px;
-  background: #fffdf5;
+  background: var(--canvas), #fffdf5;
   border: 1px solid #e6dcc0;
   box-shadow: var(--panel);
   font-size: 14px;
@@ -595,7 +604,7 @@ button { cursor: pointer; border: 0; background: none; }
   margin-top: 16px;
   padding: 20px 18px 22px;
   border-radius: 24px;
-  background: linear-gradient(170deg, #fffdf5, #f2f4e0);
+  background: var(--canvas), linear-gradient(170deg, #fffdf5, #f2f4e0);
   border: 2px solid #e6dcc0;
   box-shadow: var(--panel);
   text-align: center;
