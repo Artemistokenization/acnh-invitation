@@ -15,11 +15,11 @@ function ensureCtx() {
   return ac;
 }
 
-function unlockAudio() {
+function preloadBlip() {
   try {
     ensureCtx();
     if (blipBuf) return;
-    fetch("blip.m4a?v=15")
+    fetch("blip.m4a?v=18")
       .then((r) => r.arrayBuffer())
       .then((b) => ac.decodeAudioData(b))
       .then((buf) => { blipBuf = buf; })
@@ -27,9 +27,17 @@ function unlockAudio() {
   } catch (e) { /* 不支持则静默降级 */ }
 }
 
+function unlockAudio() {
+  try {
+    ensureCtx();
+    if (!blipBuf) preloadBlip();
+  } catch (e) {}
+}
+
 function blip() {
   try {
     if (!ac || !blipBuf) return;
+    if (ac.state === "suspended") void ac.resume();
     const src = ac.createBufferSource();
     src.buffer = blipBuf;
     src.playbackRate.value = 1 + (Math.random() * 0.06 - 0.03);
@@ -106,6 +114,7 @@ function typeArrival(text) {
 scenes.arrival.addEventListener("click", (e) => {
   if (e.target.closest("button")) return;
   unlockAudio();
+  blip();
   if (arrivalStage === 0) {
     setArrivalStage(1);
     typeArrival("咦？好像有个礼物飘过来了～");
@@ -118,7 +127,6 @@ scenes.arrival.addEventListener("click", (e) => {
     return;
   }
   if (arrivalStage === 1) {
-    blip();
     setArrivalStage(2);
   } else {
     enterBroadcast();
@@ -127,6 +135,8 @@ scenes.arrival.addEventListener("click", (e) => {
 
 el("btn-open").addEventListener("click", (e) => {
   e.stopPropagation();
+  unlockAudio();
+  blip();
   enterBroadcast();
 });
 
@@ -172,7 +182,6 @@ function enterBroadcast() {
   paused = false;
   el("btn-pause").querySelector("b").textContent = "暂停";
   paintLine();
-  blip();
   video.currentTime = Math.max(0, sync.lines[0]._times[0] - 0.12);
   video.play().catch(() => {});
   cancelAnimationFrame(raf);
@@ -232,7 +241,7 @@ async function boot() {
   setSwitch(el("btn-sound"), true, "开", "关");
   video.muted = false;
 
-  const res = await fetch("sync.json?v=15");
+  const res = await fetch("sync.json?v=18");
   const data = await res.json();
   data.lines.forEach((l) => { l._times = lineTimes(l); });
   sync = data;
@@ -243,4 +252,5 @@ async function boot() {
   el("arrival-hint").hidden = false;
 }
 
+preloadBlip();
 boot();
