@@ -243,6 +243,7 @@ button { cursor: pointer; border: 0; background: none; }
 
 .booth {
   position: relative;
+  margin-inline: 31px;
   border-radius: 20px;
   overflow: hidden;
   background: linear-gradient(180deg, #6c4a30, #4a3222);
@@ -290,6 +291,7 @@ button { cursor: pointer; border: 0; background: none; }
   position: relative;
   z-index: 2;
   display: inline-block;
+  margin-left: 15px;
   margin-bottom: -16px;
   padding: 8px 17px;
   border-radius: 15px;
@@ -300,7 +302,7 @@ button { cursor: pointer; border: 0; background: none; }
   letter-spacing: 0.1em;
   box-shadow: 0 4px 0 #c4901f;
 }
-.bubble-lg { min-height: 168px; text-align: left; padding: 30px 24px 34px; }
+.bubble-lg { min-height: 176px; text-align: left; padding: 32px 24px 34px; cursor: pointer; }
 .bubble-lg .bubble-text { font-size: 20px; }
 .bubble-lg .next { right: 20px; bottom: 14px; }
 

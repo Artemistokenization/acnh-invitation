@@ -173,6 +173,17 @@ async function enterBroadcast() {
   follow();
 }
 
+el("bcast-bubble").addEventListener("click", () => {
+  if (lineIdx >= sync.lines.length - 1) {
+    enterLetter();
+    return;
+  }
+  lineIdx += 1;
+  paintLine();
+  video.currentTime = sync.lines[lineIdx]._times[0];
+  if (video.paused && !paused) void video.play();
+});
+
 el("btn-pause").addEventListener("click", () => {
   paused = !paused;
   if (paused) video.pause();
