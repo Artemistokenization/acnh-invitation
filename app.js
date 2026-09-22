@@ -19,7 +19,7 @@ function unlockAudio() {
   try {
     ensureCtx();
     if (blipBuf) return;
-    fetch("blip.m4a?v=13")
+    fetch("blip.m4a?v=15")
       .then((r) => r.arrayBuffer())
       .then((b) => ac.decodeAudioData(b))
       .then((buf) => { blipBuf = buf; })
@@ -232,7 +232,7 @@ async function boot() {
   setSwitch(el("btn-sound"), true, "开", "关");
   video.muted = false;
 
-  const res = await fetch("sync.json?v=13");
+  const res = await fetch("sync.json?v=15");
   const data = await res.json();
   data.lines.forEach((l) => { l._times = lineTimes(l); });
   sync = data;
