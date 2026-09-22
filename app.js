@@ -5,6 +5,33 @@ const WEDDING = {
 };
 
 const el = (id) => document.getElementById(id);
+
+let ac = null;
+function blip(freq = 880, dur = 0.13, gain = 0.16) {
+  try {
+    ac = ac || new (window.AudioContext || window.webkitAudioContext)();
+    if (ac.state === "suspended") void ac.resume();
+    const t = ac.currentTime;
+    const osc = ac.createOscillator();
+    const env = ac.createGain();
+    osc.type = "triangle";
+    osc.frequency.setValueAtTime(freq, t);
+    osc.frequency.exponentialRampToValueAtTime(freq * 1.5, t + dur);
+    env.gain.setValueAtTime(0.0001, t);
+    env.gain.exponentialRampToValueAtTime(gain, t + 0.01);
+    env.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+    osc.connect(env).connect(ac.destination);
+    osc.start(t);
+    osc.stop(t + dur + 0.02);
+  } catch (e) { /* 音频不可用时静默降级 */ }
+}
+
+function unlockAudio() {
+  try {
+    ac = ac || new (window.AudioContext || window.webkitAudioContext)();
+    if (ac.state === "suspended") void ac.resume();
+  } catch (e) {}
+}
 const scenes = {
   arrival: el("scene-arrival"),
   broadcast: el("scene-broadcast"),
@@ -73,6 +100,7 @@ function typeArrival(text) {
 
 scenes.arrival.addEventListener("click", (e) => {
   if (e.target.closest("button")) return;
+  unlockAudio();
   if (arrivalStage === 0) {
     setArrivalStage(1);
     typeArrival("咦？好像有个礼物飘过来了～");
@@ -85,6 +113,7 @@ scenes.arrival.addEventListener("click", (e) => {
     return;
   }
   if (arrivalStage === 1) {
+    blip(784, 0.2, 0.18);
     setArrivalStage(2);
   } else {
     enterBroadcast();
@@ -138,10 +167,17 @@ function enterBroadcast() {
   paused = false;
   el("btn-pause").querySelector("b").textContent = "暂停";
   paintLine();
-  video.currentTime = sync.lines[0]._times[0];
+  blip(880);
+  video.currentTime = Math.max(0, sync.lines[0]._times[0] - 0.12);
   video.play().catch(() => {});
   cancelAnimationFrame(raf);
   follow();
+}
+
+function seekTo(t) {
+  video.pause();
+  video.currentTime = Math.max(0, t - 0.12);
+  void video.play().catch(() => {});
 }
 
 el("bcast-bubble").addEventListener("click", () => {
@@ -151,8 +187,8 @@ el("bcast-bubble").addEventListener("click", () => {
   }
   lineIdx += 1;
   paintLine();
-  video.currentTime = sync.lines[lineIdx]._times[0];
-  if (video.paused && !paused) void video.play();
+  blip(1046);
+  seekTo(sync.lines[lineIdx]._times[0]);
 });
 
 el("btn-pause").addEventListener("click", () => {
@@ -178,6 +214,7 @@ function enterLetter() {
   video.pause();
   show("letter");
   el("letter-card").classList.add("open");
+  blip(1318, 0.24, 0.18);
 }
 
 /* ---------- 启动 ---------- */
@@ -190,7 +227,7 @@ async function boot() {
   setSwitch(el("btn-sound"), true, "开", "关");
   video.muted = false;
 
-  const res = await fetch("sync.json?v=8");
+  const res = await fetch("sync.json?v=9");
   const data = await res.json();
   data.lines.forEach((l) => { l._times = lineTimes(l); });
   sync = data;

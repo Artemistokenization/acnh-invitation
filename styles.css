@@ -92,7 +92,7 @@ button { cursor: pointer; border: 0; background: none; }
 
 .scene-arrival {
   background: linear-gradient(180deg, var(--sky) 0%, #7ec8f3 55%, var(--sky-soft) 100%);
-  padding: 92px 22px 26px;
+  padding: 78px 22px 18px;
   text-align: center;
 }
 
@@ -135,10 +135,11 @@ button { cursor: pointer; border: 0; background: none; }
   color: #6d93ae;
 }
 
-.balloon-rig {
+  .balloon-rig {
   position: relative;
   z-index: 2;
   flex: 1;
+  min-height: 96px;
   display: flex;
   justify-content: center;
   align-items: flex-end;
@@ -146,7 +147,7 @@ button { cursor: pointer; border: 0; background: none; }
   transform: translateY(-118%);
   opacity: 0;
 }
-.balloon-rig svg { width: 132px; height: auto; filter: drop-shadow(0 12px 16px #2b6a8f33); }
+.balloon-rig svg { width: 116px; height: auto; filter: drop-shadow(0 12px 16px #2b6a8f33); }
 .balloon-rig.falling { animation: drop 2.1s cubic-bezier(0.22, 0.8, 0.3, 1) forwards; }
 .balloon-rig.landed svg { animation: bob 2.6s ease-in-out infinite; }
 @keyframes drop {
@@ -160,7 +161,7 @@ button { cursor: pointer; border: 0; background: none; }
 
 /* ---------- 气泡 ---------- */
 
-.bubble-slot { position: relative; z-index: 3; margin-top: 18px; }
+.bubble-slot { position: relative; z-index: 3; margin-top: 8px; }
 
 .bubble {
   position: relative;
@@ -208,7 +209,7 @@ button { cursor: pointer; border: 0; background: none; }
 @keyframes nudge { 50% { transform: translateY(4px); } }
 
 .hint {
-  margin: 14px 0 0;
+  margin: 10px 0 0;
   font-size: 12px;
   letter-spacing: 0.16em;
   color: #5f8ba8;
@@ -218,7 +219,7 @@ button { cursor: pointer; border: 0; background: none; }
 
 .cta {
   align-self: center;
-  margin-top: 16px;
+  margin-top: 10px;
   padding: 14px 26px;
   border-radius: 999px;
   background: var(--gold);
@@ -255,7 +256,6 @@ button { cursor: pointer; border: 0; background: none; }
   height: auto;
   border-radius: 20px;
   background: #4a3122;
-  transform: translateZ(0);
 }
 
 .note-fx {
@@ -330,7 +330,7 @@ button { cursor: pointer; border: 0; background: none; }
   display: block;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
-  padding: 84px 16px 40px;
+  padding: 66px 16px 16px;
   background: linear-gradient(180deg, var(--sage), #f0ecd6 30%, #f0ecd6);
 }
 
@@ -358,25 +358,25 @@ button { cursor: pointer; border: 0; background: none; }
 .letter-stamp small { font-size: 10px; }
 
 .letter-kicker {
-  margin: 18px 0 0;
-  font-size: 12px;
+  margin: 10px 0 0;
+  font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.22em;
   color: #7f9c6a;
 }
 .letter-call {
-  margin: 10px 0 0;
-  font-size: 38px;
+  margin: 6px 0 0;
+  font-size: 30px;
   font-weight: 800;
   letter-spacing: 0.06em;
   line-height: 1.15;
   color: #3f6f6b;
 }
-.letter-body { margin: 14px 0 0; font-size: 15px; line-height: 2; color: #5d5445; }
+.letter-body { margin: 9px 0 0; font-size: 14px; line-height: 1.75; color: #5d5445; }
 
 .card {
-  margin-top: 14px;
-  padding: 18px;
+  margin-top: 10px;
+  padding: 13px 16px;
   border-radius: 20px;
   background: #fffdf5;
   border: 1px solid #e6dcc0;
@@ -389,7 +389,7 @@ button { cursor: pointer; border: 0; background: none; }
 .card small { display: block; font-size: 11px; letter-spacing: 0.18em; color: #9aa98c; }
 
 .card-place {
-  margin-top: 22px;
+  margin-top: 12px;
   text-align: center;
   background: #1f8f88;
   border-color: #16716b;
@@ -398,13 +398,13 @@ button { cursor: pointer; border: 0; background: none; }
   padding: 22px 18px;
 }
 .card-place small { color: #b9e4df; }
-.card-place b { font-size: 30px; letter-spacing: 0.14em; margin-top: 8px; }
+.card-place b { font-size: 26px; letter-spacing: 0.14em; margin-top: 5px; }
 
 .card-quiet { border-style: dashed; }
 
 .letter-seal {
-  margin-top: 30px;
-  padding: 34px 20px 30px;
+  margin-top: 16px;
+  padding: 20px 18px 22px;
   border-radius: 24px;
   background: linear-gradient(170deg, #fffdf5, #f2f4e0);
   border: 2px solid #e6dcc0;
@@ -414,9 +414,9 @@ button { cursor: pointer; border: 0; background: none; }
 }
 .seal-leaf {
   display: block;
-  width: 30px;
-  height: 30px;
-  margin: 0 auto 14px;
+  width: 24px;
+  height: 24px;
+  margin: 0 auto 9px;
   border-radius: 50% 0 50% 50%;
   background: #6fc251;
   box-shadow: 0 3px 0 #4d9138;
@@ -424,13 +424,13 @@ button { cursor: pointer; border: 0; background: none; }
 }
 .seal-names {
   margin: 0;
-  font-size: 30px;
+  font-size: 26px;
   font-weight: 800;
   letter-spacing: 0.05em;
   color: #3f6f6b;
 }
 .seal-sub {
-  margin: 12px 0 0;
+  margin: 8px 0 0;
   font-size: 12px;
   letter-spacing: 0.2em;
   color: #97a06f;
@@ -457,4 +457,14 @@ button { cursor: pointer; border: 0; background: none; }
 
 @media (min-width: 700px) {
   .app { max-width: 430px; border-radius: 0; }
+}
+
+button, a, .bubble, .bubble-text, .name-chip, .caption, .hint, .letter-kicker,
+.letter-call, .letter-body, .card, .letter-seal, .seal-names, .seal-sub, .pill, .cta {
+  -webkit-tap-highlight-color: transparent;
+}
+.bubble, .name-chip, .caption, .hint, .letter-kicker, .letter-call, .letter-body,
+.card, .letter-seal, .pill, .cta, .letter-stamp {
+  -webkit-user-select: none;
+  user-select: none;
 }
