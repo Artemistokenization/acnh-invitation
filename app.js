@@ -3,11 +3,7 @@ import { unlockAudio, audio } from "./audio.js";
 const ISLAND = "卡通欢乐岛";
 const WEDDING = {
   names: "曾嘉慧 ♥ 陆峰浩",
-  date: "2026年10月4日",
-  weekday: "星期日",
-  meet: "12:18",
-  venue: "青屿湖畔礼堂",
-  dodo: "DODO-5214",
+  place: "浙江 · 嘉兴",
 };
 
 const el = (id) => document.getElementById(id);
@@ -132,7 +128,6 @@ el("btn-open").addEventListener("click", (e) => {
 let lineIdx = 0;
 let raf = 0;
 let paused = false;
-let finishedAt = 0;
 
 function lineTimes(line) {
   const raw = line.charAt.slice();
@@ -144,24 +139,22 @@ function lineTimes(line) {
   return raw;
 }
 
+function paintLine() {
+  el("bcast-text").textContent = sync.lines[lineIdx].text;
+}
+
 function follow() {
   raf = requestAnimationFrame(follow);
   if (!sync || paused) return;
   const t = video.currentTime;
-  while (lineIdx < sync.lines.length - 1 && t >= sync.lines[lineIdx + 1]._times[0]) {
-    lineIdx += 1;
-    el("bcast-text").textContent = "";
+  let idx = 0;
+  while (idx < sync.lines.length - 1 && t >= sync.lines[idx + 1]._times[0]) idx += 1;
+  if (idx !== lineIdx) {
+    lineIdx = idx;
+    paintLine();
   }
-  const line = sync.lines[lineIdx];
-  let n = 0;
-  while (n < line.text.length && line._times[n] <= t) n += 1;
-  const textEl = el("bcast-text");
-  if (textEl.textContent.length !== n) textEl.textContent = line.text.slice(0, n);
   const last = sync.lines[sync.lines.length - 1];
-  const allDone = lineIdx === sync.lines.length - 1 && n >= line.text.length && t >= last.videoEnd;
-  textEl.classList.toggle("typing", !allDone);
-  if (allDone && !finishedAt) finishedAt = t + 1.4;
-  if (finishedAt && t >= finishedAt) enterLetter();
+  if (lineIdx === sync.lines.length - 1 && t >= last.videoEnd + 1.4) enterLetter();
 }
 
 async function enterBroadcast() {
@@ -172,9 +165,8 @@ async function enterBroadcast() {
   video.muted = !state.broadcastOn;
   lineIdx = 0;
   paused = false;
-  finishedAt = 0;
   el("btn-pause").querySelector("b").textContent = "暂停";
-  el("bcast-text").textContent = "";
+  paintLine();
   video.currentTime = sync.lines[0]._times[0];
   await video.play().catch(() => {});
   cancelAnimationFrame(raf);
@@ -214,11 +206,7 @@ async function boot() {
   el("island-name").textContent = ISLAND;
   el("bcast-caption").textContent = `${ISLAND} · 特别广播`;
   el("w-names").textContent = WEDDING.names;
-  el("w-date").textContent = WEDDING.date;
-  el("w-weekday").textContent = WEDDING.weekday;
-  el("w-meet").textContent = WEDDING.meet;
-  el("w-venue").textContent = WEDDING.venue;
-  el("w-dodo").textContent = WEDDING.dodo;
+  el("w-place").textContent = WEDDING.place;
   setSwitch(el("btn-music"), false, "开", "关");
   setSwitch(el("btn-sfx"), true, "开", "关");
 
