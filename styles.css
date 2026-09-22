@@ -1,6 +1,6 @@
 @font-face {
   font-family: "ACNH Round";
-  src: url("acnh-round.woff2?v=26") format("woff2");
+  src: url("acnh-round.woff2?v=27") format("woff2");
   font-weight: 100 900;
   font-display: swap;
 }
@@ -74,14 +74,14 @@ button { cursor: pointer; border: 0; background: none; }
   border-radius: 999px;
   background: var(--canvas), var(--cream);
   border: 1px solid var(--cream-edge);
-  box-shadow: 0 4px 0 #ddd0ab, var(--panel);
+  box-shadow: 0 2px 0 rgba(214,200,160,.75), var(--panel);
   font-size: 13px;
   font-weight: 600;
   letter-spacing: 0.02em;
   color: var(--ink);
   transition: transform 0.12s, box-shadow 0.12s, background 0.2s;
 }
-.pill:active { transform: translateY(3px); box-shadow: 0 1px 0 #ddd0ab; }
+.pill:active { transform: translateY(2px); box-shadow: 0 0 0 rgba(0,0,0,0), 0 1px 5px rgba(96,84,52,.14); }
 .pill i { font-style: normal; font-weight: 800; }
 .pill.on { background: #fff8e0; border-color: var(--gold); }
 .pill-jump { padding-block: 10px; }
@@ -131,10 +131,10 @@ button { cursor: pointer; border: 0; background: none; }
 .cloud::after { width: 0.29em; height: 0.29em; top: -0.13em; right: 0.16em; }
 .c1 { font-size: 150px; top: 12%; left: -34%; animation: drift 30s linear infinite; }
 .c2 { font-size: 93px; top: 27%; left: -60%; animation: drift 42s linear infinite 7s; }
-.c3 { font-size: 129px; top: 45%; left: -44%; animation: drift 36s linear infinite 13s; }
-.c4 { font-size: 83px; top: 63%; left: -74%; animation: drift 48s linear infinite 4s; }
+.c3 { font-size: 104px; top: 38%; left: -44%; animation: drift 36s linear infinite 13s; }
+.c4 { font-size: 74px; top: 56%; left: -74%; animation: drift 48s linear infinite 4s; }
 .c5 { font-size: 177px; top: 7%; left: -82%; animation: drift 54s linear infinite 18s; }
-.c6 { font-size: 108px; top: 75%; left: -50%; animation: drift 40s linear infinite 24s; }
+.c6 { font-size: 88px; top: 30%; left: -50%; animation: drift 40s linear infinite 24s; }
 @keyframes drift { to { transform: translateX(640px); } }
 
 .arrival-head { position: relative; z-index: 2; }
@@ -155,7 +155,7 @@ button { cursor: pointer; border: 0; background: none; }
 /* ---------- 场景一：天空舞台 ---------- */
 
 .sky-stage { position: relative; z-index: 2; flex: 1; min-height: 96px; }
-.ground { position: absolute; left: 0; right: 0; bottom: 42px; height: 0; }
+.ground { position: absolute; left: 0; right: 0; bottom: 30px; height: 0; }
 
 .rig {
   z-index: 3;
@@ -229,8 +229,8 @@ button { cursor: pointer; border: 0; background: none; }
 .sling {
   z-index: 2;
   position: absolute;
-  left: 21%;
-  bottom: 6px;
+  left: 20%;
+  bottom: 14px;
   width: 62px;
   margin-left: -31px;
   opacity: 0;
@@ -283,7 +283,8 @@ button { cursor: pointer; border: 0; background: none; }
 /* ---------- 气泡 ---------- */
 
 .bubble-slot { position: relative; z-index: 3; margin-top: 8px; }
-#arrival-bubble { min-height: 0; padding: 18px 20px 22px; }
+#arrival-bubble { min-height: 130px; padding: 18px 20px 22px; }
+.bubble-slot { flex-shrink: 0; }
 #arrival-bubble .bubble-text { min-height: 1.85em; font-size: 17px; }
 
 .bubble {
@@ -604,13 +605,13 @@ button { cursor: pointer; border: 0; background: none; }
 
 .island-strip {
   position: absolute;
-  left: 0;
-  right: 0;
+  left: -22px;
+  right: -22px;
   bottom: 0;
   z-index: 1;
   pointer-events: none;
 }
-.island-strip svg { display: block; width: 100%; height: 208px; }
+.island-strip svg { display: block; width: 100%; height: 136px; }
 
 
 

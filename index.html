@@ -17,7 +17,7 @@
     <meta property="mp:desc" content="卡通欢乐岛婚礼请柬 · 10月3日 浙江嘉兴" />
     <meta property="mp:image:" content="https://artemistokenization.github.io/acnh-invitation/share.jpg" />
     <link rel="icon" href="data:," />
-    <link rel="stylesheet" href="styles.css?v=26" />
+    <link rel="stylesheet" href="styles.css?v=27" />
   </head>
   <body>
     <div class="app">
@@ -41,6 +41,29 @@
             <p>A LITTLE SURPRISE FOR YOU</p>
           </div>
           <div class="sky-stage" id="sky-stage">
+          <div class="island-strip" aria-hidden="true">
+            <svg viewBox="0 0 430 150" preserveAspectRatio="none">
+              <rect y="96" width="430" height="26" fill="#7fd0ee" />
+              <rect y="118" width="430" height="32" fill="#6fb94f" />
+              <path d="M0 126 q107 -26 215 -26 q108 0 215 26 v24 H0z" fill="#7cc75c" />
+              <rect y="100" width="430" height="8" fill="#9ad877" />
+              <g transform="translate(52 0)">
+                <rect x="-7" y="72" width="14" height="46" fill="#9c6530" />
+                <g fill="#57a844"><ellipse cx="0" cy="46" rx="52" ry="34" /><ellipse cx="-30" cy="62" rx="30" ry="24" /><ellipse cx="30" cy="62" rx="30" ry="24" /></g>
+                <g fill="#6dbd52"><ellipse cx="-16" cy="36" rx="30" ry="22" /><ellipse cx="20" cy="40" rx="26" ry="20" /></g>
+                <g fill="#84cd67"><ellipse cx="-24" cy="54" rx="20" ry="14" /><ellipse cx="14" cy="58" rx="18" ry="13" /></g>
+              </g>
+              <g transform="translate(378 0)">
+                <rect x="-7" y="76" width="14" height="44" fill="#9c6530" />
+                <g fill="#57a844"><ellipse cx="0" cy="50" rx="54" ry="36" /><ellipse cx="-32" cy="66" rx="30" ry="24" /><ellipse cx="32" cy="66" rx="30" ry="24" /></g>
+                <g fill="#6dbd52"><ellipse cx="16" cy="40" rx="30" ry="22" /><ellipse cx="-20" cy="44" rx="26" ry="20" /></g>
+                <g fill="#84cd67"><ellipse cx="24" cy="58" rx="20" ry="14" /><ellipse cx="-14" cy="62" rx="18" ry="13" /></g>
+              </g>
+              <g fill="#63b951">
+                <ellipse cx="150" cy="122" rx="26" ry="14" /><ellipse cx="250" cy="124" rx="22" ry="12" /><ellipse cx="316" cy="120" rx="18" ry="11" />
+              </g>
+            </svg>
+          </div>
             <i class="ground" id="ground"></i>
 
             <!-- 气球吊着礼盒，整组随风轻摆 -->
@@ -115,29 +138,6 @@
             <i class="flash" id="flash"></i>
 
           </div>
-          <div class="island-strip" aria-hidden="true">
-            <svg viewBox="0 0 430 150" preserveAspectRatio="none">
-              <rect y="96" width="430" height="26" fill="#7fd0ee" />
-              <rect y="118" width="430" height="32" fill="#6fb94f" />
-              <path d="M0 126 q107 -26 215 -26 q108 0 215 26 v24 H0z" fill="#7cc75c" />
-              <rect y="100" width="430" height="8" fill="#9ad877" />
-              <g transform="translate(52 0)">
-                <rect x="-7" y="72" width="14" height="46" fill="#9c6530" />
-                <g fill="#57a844"><ellipse cx="0" cy="46" rx="52" ry="34" /><ellipse cx="-30" cy="62" rx="30" ry="24" /><ellipse cx="30" cy="62" rx="30" ry="24" /></g>
-                <g fill="#6dbd52"><ellipse cx="-16" cy="36" rx="30" ry="22" /><ellipse cx="20" cy="40" rx="26" ry="20" /></g>
-                <g fill="#84cd67"><ellipse cx="-24" cy="54" rx="20" ry="14" /><ellipse cx="14" cy="58" rx="18" ry="13" /></g>
-              </g>
-              <g transform="translate(378 0)">
-                <rect x="-7" y="76" width="14" height="44" fill="#9c6530" />
-                <g fill="#57a844"><ellipse cx="0" cy="50" rx="54" ry="36" /><ellipse cx="-32" cy="66" rx="30" ry="24" /><ellipse cx="32" cy="66" rx="30" ry="24" /></g>
-                <g fill="#6dbd52"><ellipse cx="16" cy="40" rx="30" ry="22" /><ellipse cx="-20" cy="44" rx="26" ry="20" /></g>
-                <g fill="#84cd67"><ellipse cx="24" cy="58" rx="20" ry="14" /><ellipse cx="-14" cy="62" rx="18" ry="13" /></g>
-              </g>
-              <g fill="#63b951">
-                <ellipse cx="150" cy="122" rx="26" ry="14" /><ellipse cx="250" cy="124" rx="22" ry="12" /><ellipse cx="316" cy="120" rx="18" ry="11" />
-              </g>
-            </svg>
-          </div>
           <div class="bubble-slot">
             <div class="bubble" id="arrival-bubble">
               <p class="bubble-text" id="arrival-text"></p>
@@ -165,7 +165,7 @@
         <!-- 场景二：岛内广播 -->
         <section class="scene scene-broadcast" id="scene-broadcast">
           <div class="booth">
-            <video class="character" id="character" src="cast.mp4?v=26" poster="poster.jpg?v=26" playsinline webkit-playsinline="true" x5-playsinline="" x5-video-player-type="h5-page" x5-video-player-fullscreen="false" preload="auto" disablepictureinpicture controlslist="nodownload noplaybackrate" aria-label="西施惠岛内广播（ACNH 游戏原生过场录像，原声播放）"></video>
+            <video class="character" id="character" src="cast.mp4?v=27" poster="poster.jpg?v=27" playsinline webkit-playsinline="true" x5-playsinline="" x5-video-player-type="h5-page" x5-video-player-fullscreen="false" preload="auto" disablepictureinpicture controlslist="nodownload noplaybackrate" aria-label="西施惠岛内广播（ACNH 游戏原生过场录像，原声播放）"></video>
             <span class="note-fx" id="note-fx">♪</span>
           </div>
 
@@ -216,6 +216,6 @@
       </main>
       <i class="iris" id="iris" aria-hidden="true"></i>
     </div>
-    <script type="module" src="app.js?v=26"></script>
+    <script type="module" src="app.js?v=27"></script>
   </body>
 </html>
