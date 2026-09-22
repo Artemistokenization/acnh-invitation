@@ -1,6 +1,7 @@
 const ISLAND = "卡通欢乐岛";
 const WEDDING = {
   names: "曾嘉慧 ♥ 陆峰浩",
+  date: "10月3日",
   place: "浙江 · 嘉兴",
 };
 
@@ -19,7 +20,7 @@ function preloadBlip() {
   try {
     ensureCtx();
     if (blipBuf) return;
-    fetch("blip.m4a?v=18")
+    fetch("blip.m4a?v=20")
       .then((r) => r.arrayBuffer())
       .then((b) => ac.decodeAudioData(b))
       .then((buf) => { blipBuf = buf; })
@@ -84,7 +85,8 @@ function setArrivalStage(next) {
     el("arrival-hint").hidden = true;
     el("btn-open").hidden = false;
     el("balloon-rig").classList.add("landed");
-    typeArrival("！获得了一个神秘包裹！");
+    arrivalText.classList.add("has-gift");
+    typeArrival("获得了一个神秘包裹！");
   }
 }
 
@@ -111,6 +113,20 @@ function typeArrival(text) {
   step();
 }
 
+const envelope = el("envelope");
+let mailTimers = [];
+
+function toBroadcast() {
+  mailTimers.forEach(window.clearTimeout);
+  envelope.classList.remove("go");
+  void envelope.offsetWidth;
+  envelope.classList.add("go");
+  mailTimers = [
+    window.setTimeout(enterBroadcast, 430),
+    window.setTimeout(() => envelope.classList.remove("go"), 820),
+  ];
+}
+
 scenes.arrival.addEventListener("click", (e) => {
   if (e.target.closest("button")) return;
   unlockAudio();
@@ -129,7 +145,7 @@ scenes.arrival.addEventListener("click", (e) => {
   if (arrivalStage === 1) {
     setArrivalStage(2);
   } else {
-    enterBroadcast();
+    toBroadcast();
   }
 });
 
@@ -137,7 +153,7 @@ el("btn-open").addEventListener("click", (e) => {
   e.stopPropagation();
   unlockAudio();
   blip();
-  enterBroadcast();
+  toBroadcast();
 });
 
 /* ---------- 场景二：岛内广播（真实音轨驱动文字） ---------- */
@@ -237,11 +253,12 @@ async function boot() {
   el("island-name").textContent = ISLAND;
   el("bcast-caption").textContent = `${ISLAND} · 特别广播`;
   el("w-names").textContent = WEDDING.names;
+  el("w-date").textContent = WEDDING.date;
   el("w-place").textContent = WEDDING.place;
   setSwitch(el("btn-sound"), true, "开", "关");
   video.muted = false;
 
-  const res = await fetch("sync.json?v=18");
+  const res = await fetch("sync.json?v=20");
   const data = await res.json();
   data.lines.forEach((l) => { l._times = lineTimes(l); });
   sync = data;
