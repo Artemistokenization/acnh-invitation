@@ -17,7 +17,7 @@
     <meta property="mp:desc" content="卡通欢乐岛婚礼请柬 · 10月3日 浙江嘉兴" />
     <meta property="mp:image:" content="https://artemistokenization.github.io/acnh-invitation/share.jpg" />
     <link rel="icon" href="data:," />
-    <link rel="stylesheet" href="styles.css?v=21" />
+    <link rel="stylesheet" href="styles.css?v=22" />
   </head>
   <body>
     <div class="app">
@@ -40,33 +40,88 @@
             <h1 id="island-name">卡通欢乐岛</h1>
             <p>A LITTLE SURPRISE FOR YOU</p>
           </div>
-          <div class="balloon-rig" id="balloon-rig">
-            <svg viewBox="0 0 200 300" aria-hidden="true">
-              <defs>
-                <radialGradient id="g-ball" cx="0.36" cy="0.28" r="0.85">
-                  <stop offset="0" stop-color="#f8836f" />
-                  <stop offset="0.45" stop-color="#e8493a" />
-                  <stop offset="1" stop-color="#c22c1c" />
-                </radialGradient>
-              </defs>
-              <ellipse cx="100" cy="86" rx="57" ry="66" fill="url(#g-ball)" />
-              <ellipse cx="78" cy="60" rx="15" ry="22" fill="#fff" opacity="0.34" transform="rotate(-24 78 60)" />
-              <path d="M100 150 l-9 15 h18 z" fill="#c22c1c" />
-              <path d="M100 165 v16" stroke="#b9a13f" stroke-width="3" fill="none" />
-              <g transform="translate(100 254)">
-                <rect x="-44" y="-12" width="88" height="52" rx="6" fill="#f7f0dd" />
-                <path d="M14 -12 h30 v52 h-30 z" fill="#e9dfc4" opacity="0.55" />
-                <rect x="-9" y="-12" width="18" height="52" fill="#e8564b" />
-                <rect x="-52" y="-30" width="104" height="21" rx="5" fill="#faf5e6" />
-                <rect x="-52" y="-14" width="104" height="5" fill="#e9dfc4" />
-                <rect x="-9" y="-30" width="18" height="21" fill="#e8564b" />
-                <g fill="none" stroke="#e8564b" stroke-width="9" stroke-linecap="round">
-                  <ellipse cx="-19" cy="-40" rx="15" ry="13" />
-                  <ellipse cx="21" cy="-41" rx="19" ry="16" transform="rotate(-14 21 -41)" />
+          <div class="sky-stage" id="sky-stage">
+            <i class="ground" id="ground"></i>
+
+            <!-- 气球吊着礼盒，整组随风轻摆 -->
+            <div class="rig" id="rig">
+              <div class="balloon" id="balloon">
+                <svg viewBox="0 0 120 132" aria-hidden="true">
+                  <defs>
+                    <radialGradient id="g-ball" cx="0.36" cy="0.28" r="0.85">
+                      <stop offset="0" stop-color="#f8836f" />
+                      <stop offset="0.45" stop-color="#e8493a" />
+                      <stop offset="1" stop-color="#c22c1c" />
+                    </radialGradient>
+                  </defs>
+                  <ellipse cx="60" cy="58" rx="55" ry="62" fill="url(#g-ball)" />
+                  <ellipse cx="38" cy="32" rx="14" ry="21" fill="#fff" opacity="0.34" transform="rotate(-24 38 32)" />
+                  <path d="M60 118 l-9 14 h18 z" fill="#c22c1c" />
+                </svg>
+              </div>
+              <i class="tether" id="tether"></i>
+              <div class="gift" id="gift">
+                <svg class="gift-body" viewBox="0 0 120 104" aria-hidden="true">
+                  <rect x="14" y="26" width="92" height="74" rx="7" fill="#f7f0dd" />
+                  <path d="M76 26 h30 v74 h-30 z" fill="#e9dfc4" opacity="0.55" />
+                  <rect x="51" y="26" width="18" height="74" fill="#e8564b" />
+                </svg>
+                <div class="gift-lid" id="gift-lid">
+                  <svg viewBox="0 0 120 62" aria-hidden="true">
+                    <rect x="8" y="22" width="104" height="24" rx="6" fill="#faf5e6" />
+                    <rect x="8" y="40" width="104" height="6" fill="#e9dfc4" />
+                    <rect x="51" y="22" width="18" height="24" fill="#e8564b" />
+                    <g fill="none" stroke="#e8564b" stroke-width="9" stroke-linecap="round">
+                      <ellipse cx="40" cy="14" rx="15" ry="13" />
+                      <ellipse cx="80" cy="13" rx="19" ry="16" transform="rotate(-14 80 13)" />
+                    </g>
+                    <rect x="50" y="8" width="20" height="14" rx="6" fill="#e8564b" />
+                  </svg>
+                </div>
+                <div class="invite" id="invite">
+                  <svg viewBox="0 0 200 132" aria-hidden="true">
+                    <rect width="200" height="132" rx="7" fill="#f3e7cd" />
+                    <path d="M0 7 q100 78 200 0 v118 H0z" fill="#e6d5ae" opacity="0.6" />
+                    <path d="M0 7 L100 85 L200 7" fill="none" stroke="#cdbb8e" stroke-width="4" />
+                    <g transform="translate(100 92)">
+                      <circle r="21" fill="#3f9d78" />
+                      <path d="M0 -12 q12 7 9 17 q-9 7 -18 0 q-3 -10 9 -17z" fill="#eaf6ef" />
+                      <path d="M0 -9 v18" stroke="#3f9d78" stroke-width="2.6" />
+                    </g>
+                  </svg>
+                </div>
+              </div>
+            </div>
+
+            <!-- 动森弹弓 -->
+            <div class="sling" id="sling">
+              <svg viewBox="0 0 120 132" aria-hidden="true">
+                <g fill="none" stroke-linecap="round">
+                  <path d="M34 20 C34 62 44 78 60 86 C76 78 86 62 86 20" stroke="#6a4630" stroke-width="26" />
+                  <path d="M60 86 V122" stroke="#6a4630" stroke-width="24" />
+                  <path d="M34 20 C34 62 44 78 60 86 C76 78 86 62 86 20" stroke="#c39557" stroke-width="14" />
+                  <path d="M60 88 V122" stroke="#c39557" stroke-width="12" />
                 </g>
-                <rect x="-10" y="-46" width="20" height="14" rx="6" fill="#e8564b" />
-              </g>
-            </svg>
+                <g id="bands" stroke="#cc5f42" stroke-width="7" stroke-linecap="round" fill="none">
+                  <path d="M40 30 L60 76" />
+                  <path d="M80 30 L60 76" />
+                </g>
+                <rect x="43" y="68" width="34" height="14" rx="7" fill="#5d3f2b" />
+              </svg>
+            </div>
+
+            <i class="pebble" id="pebble"></i>
+            <div class="fx" id="fx" aria-hidden="true"></div>
+            <i class="flash" id="flash"></i>
+
+            <!-- 动森 DIY 制作小游戏：游标往返，停在绿区即成功 -->
+            <div class="craft" id="craft" hidden>
+              <div class="craft-track">
+                <i class="craft-zone"></i>
+                <i class="craft-cursor" id="craft-cursor"></i>
+              </div>
+              <p class="craft-label">DIY 制作中</p>
+            </div>
           </div>
           <div class="island-strip" aria-hidden="true">
             <svg viewBox="0 0 430 150" preserveAspectRatio="none">
@@ -118,7 +173,7 @@
         <!-- 场景二：岛内广播 -->
         <section class="scene scene-broadcast" id="scene-broadcast">
           <div class="booth">
-            <video class="character" id="character" src="cast.mp4?v=21" poster="poster.jpg?v=21" playsinline webkit-playsinline="true" x5-playsinline="" x5-video-player-type="h5-page" x5-video-player-fullscreen="false" preload="auto" disablepictureinpicture controlslist="nodownload noplaybackrate" aria-label="西施惠岛内广播（ACNH 游戏原生过场录像，原声播放）"></video>
+            <video class="character" id="character" src="cast.mp4?v=22" poster="poster.jpg?v=22" playsinline webkit-playsinline="true" x5-playsinline="" x5-video-player-type="h5-page" x5-video-player-fullscreen="false" preload="auto" disablepictureinpicture controlslist="nodownload noplaybackrate" aria-label="西施惠岛内广播（ACNH 游戏原生过场录像，原声播放）"></video>
             <span class="note-fx" id="note-fx">♪</span>
           </div>
 
@@ -167,7 +222,8 @@
           </article>
         </section>
       </main>
+      <i class="iris" id="iris" aria-hidden="true"></i>
     </div>
-    <script type="module" src="app.js?v=21"></script>
+    <script type="module" src="app.js?v=22"></script>
   </body>
 </html>
