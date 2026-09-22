@@ -92,7 +92,7 @@ button { cursor: pointer; border: 0; background: none; }
 
 .scene-arrival {
   background: linear-gradient(180deg, var(--sky) 0%, #7ec8f3 55%, var(--sky-soft) 100%);
-  padding: 78px 22px 18px;
+  padding: 78px 22px calc(18px + env(safe-area-inset-bottom));
   text-align: center;
 }
 
@@ -236,7 +236,7 @@ button { cursor: pointer; border: 0; background: none; }
 /* ---------- 场景二：广播 ---------- */
 
 .scene-broadcast {
-  padding: 84px 18px 20px;
+  padding: 84px 18px calc(20px + env(safe-area-inset-bottom));
   background-color: var(--sage);
   background-image: radial-gradient(var(--sage-deep) 1.4px, transparent 1.4px);
   background-size: 22px 22px;
@@ -330,7 +330,7 @@ button { cursor: pointer; border: 0; background: none; }
   display: block;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
-  padding: 66px 16px 16px;
+  padding: 66px 16px calc(16px + env(safe-area-inset-bottom));
   background: linear-gradient(180deg, var(--sage), #f0ecd6 30%, #f0ecd6);
 }
 
