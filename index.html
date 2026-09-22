@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#60bafa" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>曾嘉慧 ♥ 陆峰浩 · 邀请你登岛</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app">
+      <header class="topbar">
+        <div class="switch-group">
+          <button class="pill" id="btn-music" aria-pressed="false">♪ 音乐 <b>关</b></button>
+          <button class="pill on" id="btn-sfx" aria-pressed="true">音效 <b>开</b></button>
+        </div>
+        <button class="pill pill-jump" id="btn-direct">直接查看邀请函 <i>↗</i></button>
+      </header>
+
+      <main class="scenes">
+        <!-- 场景一：气球礼物 -->
+        <section class="scene scene-arrival active" id="scene-arrival">
+          <div class="clouds">
+            <span class="cloud c1"></span><span class="cloud c2"></span>
+            <span class="cloud c3"></span><span class="cloud c4"></span>
+          </div>
+          <div class="arrival-head">
+            <h1 id="island-name">卡通欢乐岛</h1>
+            <p>A LITTLE SURPRISE FOR YOU</p>
+          </div>
+          <div class="balloon-rig" id="balloon-rig">
+            <svg viewBox="0 0 200 300" aria-hidden="true">
+              <ellipse cx="100" cy="92" rx="62" ry="72" fill="#e0402f" />
+              <ellipse cx="78" cy="66" rx="16" ry="24" fill="#ffffff" opacity="0.32" />
+              <path d="M100 164 l-11 16 h22 z" fill="#c8331f" />
+              <path d="M100 180 q-16 22 0 34 q16 12 0 30" stroke="#f4e9cf" stroke-width="4" fill="none" />
+              <g transform="translate(100 258)">
+                <rect x="-42" y="-26" width="84" height="56" rx="7" fill="#f6efdd" />
+                <rect x="-42" y="-8" width="84" height="16" fill="#e8564b" />
+                <rect x="-9" y="-26" width="18" height="56" fill="#e8564b" />
+                <path d="M-9 -26 q-24 -18 -30 -2 q-4 12 30 2z" fill="#e8564b" />
+                <path d="M9 -26 q24 -18 30 -2 q4 12 -30 2z" fill="#e8564b" />
+              </g>
+            </svg>
+          </div>
+          <div class="bubble-slot">
+            <div class="bubble" id="arrival-bubble">
+              <p class="bubble-text" id="arrival-text"></p>
+              <span class="next" id="arrival-next">▼</span>
+            </div>
+          </div>
+          <p class="hint" id="arrival-hint">点击可以试试</p>
+          <button class="cta" id="btn-open" hidden>打开看看 <i>→</i></button>
+        </section>
+
+        <!-- 场景二：岛内广播 -->
+        <section class="scene scene-broadcast" id="scene-broadcast">
+          <div class="booth">
+            <video class="character" id="character" src="cast.mp4" playsinline preload="auto" aria-label="西施惠岛内广播（ACNH 游戏原生过场录像，原声播放）"></video>
+            <span class="note-fx" id="note-fx">♪</span>
+          </div>
+
+          <div class="dialogue-slot">
+            <span class="name-chip">西施惠</span>
+            <div class="bubble bubble-lg">
+              <p class="bubble-text" id="bcast-text"></p>
+            </div>
+          </div>
+          <p class="caption" id="bcast-caption">卡通欢乐岛 · 特别广播</p>
+          <div class="actions">
+            <button class="pill" id="btn-pause"><b>暂停</b></button>
+            <button class="pill" id="btn-voice"><b>广播静音</b></button>
+            <button class="pill pill-go" id="btn-skip">跳过广播，去收信 <i>→</i></button>
+          </div>
+        </section>
+
+        <!-- 场景三：狸克邮件 / 邀请函正文 -->
+        <section class="scene scene-letter" id="scene-letter">
+          <article class="letter" id="letter-card">
+            <div class="letter-stamp"><span>Nook Inc.</span><small>狸克 寄出</small></div>
+            <h2 id="w-names">曾嘉慧 ♥ 陆峰浩</h2>
+            <p class="letter-date"><b id="w-date">2026年10月4日</b><span id="w-weekday">星期日</span></p>
+            <p class="letter-body">
+              我们的婚礼想在岛上办。<br />
+              请你搭上 DODO 航班，来见证我们交换约定的那一刻。
+            </p>
+
+            <div class="card card-dodo">
+              <small>DODO 航空 · 登岛密码</small>
+              <b id="w-dodo">DODO-5214</b>
+              <span>到机场后输入 5 位密码即可登岛</span>
+            </div>
+
+            <div class="block-title">婚礼流程</div>
+            <ol class="timeline">
+              <li><time>11:30</time><b>机场前集合</b><span>领取登岛手环与日程卡</span></li>
+              <li><time id="w-meet">12:18</time><b>草坪仪式</b><span>在风铃与海浪声里交换约定</span></li>
+              <li><time>13:30</time><b>岛上晚宴</b><span>树影餐桌、蛋糕与第一支舞</span></li>
+              <li><time>16:00</time><b>合影与送客</b><span>北岸灯塔旁拍全家福</span></li>
+            </ol>
+
+            <div class="block-title">地点</div>
+            <div class="card">
+              <b id="w-venue">青屿湖畔礼堂</b>
+              <span>上海市 · 青屿湖畔公园北侧</span>
+              <a class="link-btn" href="https://uri.amap.com/search?keyword=%E9%9D%92%E5%B1%BF%E6%B9%96%E7%95%94%E7%A4%BC%E5%A0%82" target="_blank" rel="noreferrer">打开导航 <i>↗</i></a>
+            </div>
+
+            <div class="block-title">我们的照片</div>
+            <div class="photos">
+              <div class="ph">照片 1</div><div class="ph">照片 2</div>
+              <div class="ph">照片 3</div><div class="ph">照片 4</div>
+            </div>
+
+            <p class="letter-foot">期待在卡通欢乐岛见到你。</p>
+          </article>
+        </section>
+      </main>
+    </div>
+    <script type="module" src="app.js"></script>
+  </body>
+</html>
