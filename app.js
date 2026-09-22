@@ -7,30 +7,35 @@ const WEDDING = {
 const el = (id) => document.getElementById(id);
 
 let ac = null;
-function blip(freq = 880, dur = 0.13, gain = 0.16) {
-  try {
-    ac = ac || new (window.AudioContext || window.webkitAudioContext)();
-    if (ac.state === "suspended") void ac.resume();
-    const t = ac.currentTime;
-    const osc = ac.createOscillator();
-    const env = ac.createGain();
-    osc.type = "triangle";
-    osc.frequency.setValueAtTime(freq, t);
-    osc.frequency.exponentialRampToValueAtTime(freq * 1.5, t + dur);
-    env.gain.setValueAtTime(0.0001, t);
-    env.gain.exponentialRampToValueAtTime(gain, t + 0.01);
-    env.gain.exponentialRampToValueAtTime(0.0001, t + dur);
-    osc.connect(env).connect(ac.destination);
-    osc.start(t);
-    osc.stop(t + dur + 0.02);
-  } catch (e) { /* 音频不可用时静默降级 */ }
+let blipBuf = null;
+
+function ensureCtx() {
+  ac = ac || new (window.AudioContext || window.webkitAudioContext)();
+  if (ac.state === "suspended") void ac.resume();
+  return ac;
 }
 
 function unlockAudio() {
   try {
-    ac = ac || new (window.AudioContext || window.webkitAudioContext)();
-    if (ac.state === "suspended") void ac.resume();
-  } catch (e) {}
+    ensureCtx();
+    if (blipBuf) return;
+    fetch("blip.m4a?v=13")
+      .then((r) => r.arrayBuffer())
+      .then((b) => ac.decodeAudioData(b))
+      .then((buf) => { blipBuf = buf; })
+      .catch(() => {});
+  } catch (e) { /* 不支持则静默降级 */ }
+}
+
+function blip() {
+  try {
+    if (!ac || !blipBuf) return;
+    const src = ac.createBufferSource();
+    src.buffer = blipBuf;
+    src.playbackRate.value = 1 + (Math.random() * 0.06 - 0.03);
+    src.connect(ac.destination);
+    src.start();
+  } catch (e) { /* 忽略 */ }
 }
 const scenes = {
   arrival: el("scene-arrival"),
@@ -113,7 +118,7 @@ scenes.arrival.addEventListener("click", (e) => {
     return;
   }
   if (arrivalStage === 1) {
-    blip(784, 0.2, 0.18);
+    blip();
     setArrivalStage(2);
   } else {
     enterBroadcast();
@@ -167,7 +172,7 @@ function enterBroadcast() {
   paused = false;
   el("btn-pause").querySelector("b").textContent = "暂停";
   paintLine();
-  blip(880);
+  blip();
   video.currentTime = Math.max(0, sync.lines[0]._times[0] - 0.12);
   video.play().catch(() => {});
   cancelAnimationFrame(raf);
@@ -187,7 +192,7 @@ el("bcast-bubble").addEventListener("click", () => {
   }
   lineIdx += 1;
   paintLine();
-  blip(1046);
+  blip();
   seekTo(sync.lines[lineIdx]._times[0]);
 });
 
@@ -214,7 +219,7 @@ function enterLetter() {
   video.pause();
   show("letter");
   el("letter-card").classList.add("open");
-  blip(1318, 0.24, 0.18);
+  blip();
 }
 
 /* ---------- 启动 ---------- */
@@ -227,7 +232,7 @@ async function boot() {
   setSwitch(el("btn-sound"), true, "开", "关");
   video.muted = false;
 
-  const res = await fetch("sync.json?v=9");
+  const res = await fetch("sync.json?v=13");
   const data = await res.json();
   data.lines.forEach((l) => { l._times = lineTimes(l); });
   sync = data;
