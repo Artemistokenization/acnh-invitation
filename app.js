@@ -20,7 +20,7 @@ function preloadBlip() {
   try {
     ensureCtx();
     if (blipBuf) return;
-    fetch("blip.m4a?v=29")
+    fetch("blip.m4a?v=30")
       .then((r) => r.arrayBuffer())
       .then((b) => ac.decodeAudioData(b))
       .then((buf) => { blipBuf = buf; })
@@ -180,7 +180,7 @@ function fire() {
     leaves(9);
     window.setTimeout(() => {
       gift.classList.add("open");
-      invite.classList.add("rise", "glow");
+      invite.classList.add("rise");
     }, 1120);
     window.setTimeout(() => {
       busy = false;
@@ -308,9 +308,9 @@ function enterBroadcast() {
 }
 
 function seekTo(t) {
-  video.pause();
+  // 播放中直接 seek，不做 pause/play 往返：那三下在弱机上各触发一次解码器状态切换
   video.currentTime = Math.max(0, t - 0.12);
-  void video.play().catch(() => {});
+  if (video.paused) void video.play().catch(() => {});
 }
 
 el("bcast-bubble").addEventListener("click", () => {
@@ -361,7 +361,7 @@ async function boot() {
   setSwitch(el("btn-sound"), true, "开", "关");
   video.muted = false;
 
-  const res = await fetch("sync.json?v=29");
+  const res = await fetch("sync.json?v=30");
   const data = await res.json();
   data.lines.forEach((l) => { l._times = lineTimes(l); });
   sync = data;

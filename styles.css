@@ -1,6 +1,6 @@
 @font-face {
   font-family: "ACNH Round";
-  src: url("acnh-round.woff2?v=29") format("woff2");
+  src: url("acnh-round.woff2?v=30") format("woff2");
   font-weight: 100 900;
   font-display: swap;
 }
@@ -101,6 +101,8 @@ button { cursor: pointer; border: 0; background: none; }
   transition: opacity 0.5s ease, transform 0.6s ease;
 }
 .scene.active { opacity: 1; pointer-events: auto; transform: none; }
+/* 隐藏场景里的无限动画(云漂移/摇摆/闪烁)一律暂停，弱机上它们是视频卡顿的主因 */
+.scene:not(.active), .scene:not(.active) * { animation-play-state: paused !important; }
 
 /* ---------- 场景一：气球 ---------- */
 
@@ -119,7 +121,6 @@ button { cursor: pointer; border: 0; background: none; }
   border-radius: 0.31em;
   background: linear-gradient(180deg, #fff 55%, #e9f4fc 100%);
   opacity: 0.9;
-  filter: blur(0.6px);
 }
 .cloud::before, .cloud::after {
   content: "";
@@ -186,7 +187,7 @@ button { cursor: pointer; border: 0; background: none; }
 .tether.snap { animation: snap 170ms ease-out forwards; }
 @keyframes snap { to { transform: scaleY(0); opacity: 0; } }
 
-.gift { position: relative; width: 104px; margin: 0 auto; filter: drop-shadow(0 10px 14px #2b6a8f2e); }
+.gift { position: relative; width: 104px; margin: 0 auto; }
 .gift-body { display: block; width: 100%; height: auto; }
 .gift-lid { position: absolute; left: 50%; top: -20px; width: 120px; margin-left: -60px; z-index: 3; }
 .gift-lid svg { display: block; width: 100%; height: auto; }
@@ -223,8 +224,7 @@ button { cursor: pointer; border: 0; background: none; }
   40% { opacity: 1; }
   100% { opacity: 1; transform: translateY(-86px) scale(1) rotate(-3deg); }
 }
-.invite.rise.glow { animation: rise 700ms cubic-bezier(0.2, 0.85, 0.3, 1) forwards, glow 1.6s ease-in-out 700ms infinite alternate; }
-@keyframes glow { from { filter: drop-shadow(0 8px 14px #2b6a8f33); } to { filter: drop-shadow(0 0 18px #f6d98a); } }
+.invite.rise { filter: drop-shadow(0 6px 12px #2b6a8f33); }
 
 .sling {
   z-index: 2;
@@ -236,7 +236,6 @@ button { cursor: pointer; border: 0; background: none; }
   opacity: 0;
   transform: translateY(130%) rotate(-9deg);
   transition: transform 460ms cubic-bezier(0.2, 0.9, 0.3, 1.25), opacity 260ms;
-  filter: drop-shadow(0 6px 10px #4a322233);
 }
 .sling svg { display: block; width: 100%; height: auto; }
 .sling.up { opacity: 1; transform: translateY(0) rotate(-9deg); }
