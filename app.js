@@ -20,7 +20,7 @@ function preloadBlip() {
   try {
     ensureCtx();
     if (blipBuf) return;
-    fetch("blip.m4a?v=34")
+    fetch("blip.m4a?v=35")
       .then((r) => r.arrayBuffer())
       .then((b) => ac.decodeAudioData(b))
       .then((buf) => { blipBuf = buf; })
@@ -279,45 +279,22 @@ function paintLine() {
   el("bcast-text").textContent = sync.lines[lineIdx].text;
 }
 
-let manual = false;
-let manualTimer = 0;
-
-function lineHold(line) {
-  const vis = line.text.replace(/\n/g, "").length;
-  return Math.max(2200, (vis / 5.5) * 1000);
-}
-
-function showLine(i) {
-  lineIdx = i;
-  paintLine();
-  window.clearTimeout(manualTimer);
-  if (lineIdx < sync.lines.length - 1) {
-    manualTimer = window.setTimeout(() => showLine(lineIdx + 1), lineHold(sync.lines[lineIdx]));
-  }
-}
-
 function follow() {
   raf = requestAnimationFrame(follow);
   if (!sync || paused) return;
   const t = video.currentTime;
-  // 手动跳过之后不再用视频时间回拉字幕：视频全程不被碰，也就不会有 seek 后的持续卡顿
-  if (!manual) {
-    let idx = 0;
-    while (idx < sync.lines.length - 1 && t >= sync.lines[idx + 1]._times[0]) idx += 1;
-    if (idx !== lineIdx) {
-      lineIdx = idx;
-      paintLine();
-    }
+  let idx = 0;
+  while (idx < sync.lines.length - 1 && t >= sync.lines[idx + 1]._times[0]) idx += 1;
+  if (idx !== lineIdx) {
+    lineIdx = idx;
+    paintLine();
   }
   const last = sync.lines[sync.lines.length - 1];
-  const done = video.ended || (!manual && lineIdx === sync.lines.length - 1 && t >= last.videoEnd + 0.8);
-  if (done) enterLetter();
+  if (lineIdx === sync.lines.length - 1 && (t >= last.videoEnd + 0.8 || video.ended)) enterLetter();
 }
 
 function enterBroadcast() {
   window.clearTimeout(arrivalTimer);
-  window.clearTimeout(manualTimer);
-  manual = false;
   show("broadcast");
   video.muted = !state.soundOn;
   lineIdx = 0;
@@ -330,14 +307,21 @@ function enterBroadcast() {
   follow();
 }
 
+function seekTo(t) {
+  // 播放中直接 seek，不做 pause/play 往返：那三下在弱机上各触发一次解码器状态切换
+  video.currentTime = Math.max(0, t - 0.12);
+  if (video.paused) void video.play().catch(() => {});
+}
+
 el("bcast-bubble").addEventListener("click", () => {
-  // 只推进字幕，不 seek 视频、不播 WebAudio：这两者是安卓微信里点击后持续卡顿的来源
   if (lineIdx >= sync.lines.length - 1) {
     enterLetter();
     return;
   }
-  manual = true;
-  showLine(lineIdx + 1);
+  lineIdx += 1;
+  paintLine();
+  blip();
+  seekTo(sync.lines[lineIdx]._times[0]);
 });
 
 el("btn-pause").addEventListener("click", () => {
@@ -359,7 +343,6 @@ el("btn-skip").addEventListener("click", () => enterLetter());
 
 function enterLetter() {
   cancelAnimationFrame(raf);
-  window.clearTimeout(manualTimer);
   paused = true;
   video.pause();
   show("letter");
@@ -378,7 +361,7 @@ async function boot() {
   setSwitch(el("btn-sound"), true, "开", "关");
   video.muted = false;
 
-  const res = await fetch("sync.json?v=34");
+  const res = await fetch("sync.json?v=35");
   const data = await res.json();
   data.lines.forEach((l) => { l._times = lineTimes(l); });
   sync = data;
