@@ -2,6 +2,10 @@
 <html lang="zh-CN">
   <head>
     <meta charset="utf-8" />
+    <!-- 微信 webview 会长期缓存 HTML，导致拿不到新构建；禁缓存后 ?v 尾巴只需换一次 -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="theme-color" content="#60bafa" />
     <title>曾嘉慧 ♥ 陆峰浩 · 邀请你登岛</title>
@@ -17,7 +21,7 @@
     <meta property="mp:desc" content="卡通欢乐岛婚礼请柬 · 10月3日 浙江嘉兴 · 仪式14:30 晚宴18:18" />
     <meta property="mp:image:" content="https://artemistokenization.github.io/acnh-invitation/share.jpg" />
     <link rel="icon" href="data:," />
-    <link rel="stylesheet" href="styles.css?v=45" />
+    <link rel="stylesheet" href="styles.css?v=46" />
   </head>
   <body>
     <div class="app">
@@ -179,7 +183,7 @@
         <section class="scene scene-broadcast" id="scene-broadcast">
           <div class="petals" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
           <div class="booth">
-            <video class="character" id="character" data-src="cast.mp4?v=45" poster="poster.jpg?v=45" playsinline webkit-playsinline="true" x5-playsinline="" x5-video-player-type="h5-page" x5-video-player-fullscreen="false" preload="metadata" disablepictureinpicture controlslist="nodownload noplaybackrate" aria-label="西施惠岛内广播（ACNH 游戏原生过场录像，原声播放）"></video>
+            <video class="character" id="character" data-src="cast.mp4?v=46" poster="poster.jpg?v=46" playsinline webkit-playsinline="true" x5-playsinline="" x5-video-player-type="h5-page" x5-video-player-fullscreen="false" preload="metadata" disablepictureinpicture controlslist="nodownload noplaybackrate" aria-label="西施惠岛内广播（ACNH 游戏原生过场录像，原声播放）"></video>
             <span class="note-fx" id="note-fx">♪</span>
           </div>
 
@@ -244,10 +248,10 @@
             <div class="album">
               <p class="album-title"><span class="seal-leaf"></span>我们的照片</p>
               <div class="album-grid">
-                <figure class="pol pol-a"><i class="tape"></i><img data-src="p1.jpg?v=45" alt="我们的婚纱照" loading="lazy" /></figure>
-                <figure class="pol pol-b"><i class="tape"></i><img data-src="p2.jpg?v=45" alt="我们的婚纱照" loading="lazy" /></figure>
-                <figure class="pol pol-c"><i class="tape"></i><img data-src="p3.jpg?v=45" alt="我们的婚纱照" loading="lazy" /></figure>
-                <figure class="pol pol-d"><i class="tape"></i><img data-src="p4.jpg?v=45" alt="我们的婚纱照" loading="lazy" /></figure>
+                <figure class="pol pol-a"><i class="tape"></i><img data-src="p1.jpg?v=46" alt="我们的婚纱照" loading="lazy" /></figure>
+                <figure class="pol pol-b"><i class="tape"></i><img data-src="p2.jpg?v=46" alt="我们的婚纱照" loading="lazy" /></figure>
+                <figure class="pol pol-c"><i class="tape"></i><img data-src="p3.jpg?v=46" alt="我们的婚纱照" loading="lazy" /></figure>
+                <figure class="pol pol-d"><i class="tape"></i><img data-src="p4.jpg?v=46" alt="我们的婚纱照" loading="lazy" /></figure>
               </div>
             </div>
 
@@ -268,6 +272,6 @@
       </main>
       <i class="iris" id="iris" aria-hidden="true"></i>
     </div>
-    <script type="module" src="app.js?v=45"></script>
+    <script type="module" src="app.js?v=46"></script>
   </body>
 </html>
