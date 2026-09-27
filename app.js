@@ -1,6 +1,6 @@
 const ISLAND = "卡通欢乐岛";
 const WEDDING = {
-  names: "曾嘉慧 ♥ 陆峰浩",
+  names: "陆峰浩 ♥ 曾嘉慧",
   date: "10月3日",
   place: "浙江 · 嘉兴",
 };
@@ -435,7 +435,7 @@ async function boot() {
   setSwitch(el("btn-sound"), true, "开", "关");
   video.muted = false;
 
-  const res = await fetch("sync.json?v=46");
+  const res = await fetch("sync.json?v=47");
   const data = await res.json();
   data.lines.forEach((l) => { l._times = lineTimes(l); });
   sync = data;
