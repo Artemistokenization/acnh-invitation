@@ -20,7 +20,7 @@ function preloadBlip() {
   try {
     ensureCtx();
     if (blipBuf) return;
-    fetch("blip.m4a?v=35")
+    fetch("blip.m4a?v=37")
       .then((r) => r.arrayBuffer())
       .then((b) => ac.decodeAudioData(b))
       .then((buf) => { blipBuf = buf; })
@@ -341,8 +341,13 @@ el("btn-skip").addEventListener("click", () => enterLetter());
 
 /* ---------- 场景三：狸克邮件 / 邀请函正文 ---------- */
 
+scenes.letter.addEventListener("scroll", () => {
+  if (scenes.letter.scrollTop > 40) el("scroll-hint").classList.add("gone");
+}, { passive: true });
+
 function enterLetter() {
   cancelAnimationFrame(raf);
+  el("scroll-hint").classList.remove("gone");
   paused = true;
   video.pause();
   show("letter");
@@ -361,7 +366,7 @@ async function boot() {
   setSwitch(el("btn-sound"), true, "开", "关");
   video.muted = false;
 
-  const res = await fetch("sync.json?v=35");
+  const res = await fetch("sync.json?v=37");
   const data = await res.json();
   data.lines.forEach((l) => { l._times = lineTimes(l); });
   sync = data;
