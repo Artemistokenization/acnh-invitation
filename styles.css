@@ -1,6 +1,6 @@
 @font-face {
   font-family: "ACNH Round";
-  src: url("acnh-round.woff2?v=37") format("woff2");
+  src: url("acnh-round.woff2?v=40") format("woff2");
   font-weight: 100 900;
   font-display: swap;
 }
@@ -276,7 +276,7 @@ button { cursor: pointer; border: 0; background: none; }
   75% { transform: translate(-3px, 2px); }
 }
 
-25% { transform: translateX(-7px); } 60% { transform: translateX(6px); } }
+@keyframes nudge { 0%, 100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(4px); } }
 
 
 /* ---------- 气泡 ---------- */
@@ -776,3 +776,124 @@ button, a, .bubble, .bubble-text, .name-chip, .caption, .hint, .letter-kicker,
   50% { transform: translate(var(--dx), 46vh) rotate(200deg); }
   100% { opacity: 0; transform: translate(calc(var(--dx) * 0.4), 78vh) rotate(420deg); }
 }
+
+/* ---------- 复制地址 / 照片放大 ---------- */
+.copy-hint {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 1px 7px 2px;
+  border-radius: 50px;
+  background: #eab94a;
+  color: #4d3f1b;
+  font-style: normal;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  vertical-align: 1px;
+}
+.plan-item { cursor: pointer; transition: transform 0.12s; }
+.plan-item:active { transform: scale(0.985); }
+.pol img { cursor: zoom-in; }
+
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: calc(56px + env(safe-area-inset-bottom));
+  transform: translateX(-50%) translateY(14px);
+  z-index: 40;
+  padding: 10px 20px;
+  border-radius: 50px;
+  background: rgba(61, 52, 40, 0.92);
+  color: #fdf6e2;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s, transform 0.25s;
+}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 45;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 22px;
+  background: rgba(43, 36, 26, 0.86);
+  opacity: 0;
+  transition: opacity 0.22s;
+}
+.lightbox.open { opacity: 1; }
+.lightbox img {
+  max-width: 92vw;
+  max-height: 78vh;
+  border-radius: 10px;
+  border: 5px solid #fffdf5;
+  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.45);
+  transform: scale(0.86);
+  transition: transform 0.24s cubic-bezier(0.2, 0.9, 0.3, 1.2);
+}
+.lightbox.open img { transform: scale(1); }
+.lightbox p { color: #e8dfc8; font-size: 12px; letter-spacing: 0.16em; }
+
+/* ---------- 开场木牌 / 远景 / 广播木框 ---------- */
+.island-sign {
+  position: relative;
+  display: inline-block;
+  padding: 13px 26px 12px;
+  border-radius: 12px;
+  background:
+    repeating-linear-gradient(92deg, rgba(90, 58, 24, 0.10) 0 3px, rgba(255, 255, 255, 0) 3px 9px),
+    linear-gradient(180deg, #c09055 0%, #a97a41 55%, #96682f 100%);
+  border: 3px solid #7d5527;
+  box-shadow: inset 0 2px 0 rgba(255, 240, 200, 0.35), inset 0 -3px 0 rgba(70, 44, 16, 0.35),
+    0 6px 14px rgba(43, 74, 106, 0.28);
+  transform-origin: 50% -22px;
+  animation: sign-sway 4.6s ease-in-out infinite;
+}
+@keyframes sign-sway {
+  0%, 100% { transform: rotate(-1.4deg); }
+  50% { transform: rotate(1.4deg); }
+}
+.island-sign .rope {
+  position: absolute; top: -26px; width: 3px; height: 28px;
+  background: linear-gradient(180deg, #e8d9a8, #cbb87f);
+}
+.island-sign .r1 { left: 22%; transform: rotate(9deg); }
+.island-sign .r2 { right: 22%; transform: rotate(-9deg); }
+.leaf-pin {
+  position: absolute; top: -12px; right: -10px; width: 26px; height: 26px; border-radius: 50%;
+  background: #4e8b4a; box-shadow: 0 2px 0 #356033, inset 0 -3px 0 rgba(0, 0, 0, 0.15);
+}
+.leaf-pin::after {
+  content: ""; position: absolute; inset: 6px; border-radius: 50% 8% 50% 8%;
+  background: #eaf6ef; transform: rotate(45deg);
+}
+.arrival-head h1 {
+  margin: 0; font-size: 24px; font-weight: 800; letter-spacing: 0.18em;
+  color: #fff8e2; text-shadow: 0 2px 0 #6d4620, 0 3px 8px rgba(50, 30, 8, 0.55);
+}
+.arrival-head p { margin: 6px 0 0; font-size: 9.5px; letter-spacing: 0.2em; color: #ffe9bd; }
+
+.far { position: absolute; left: -4%; right: -4%; bottom: 46px; z-index: 0; opacity: 0.72; }
+.far svg { display: block; width: 100%; height: 44px; }
+
+.booth {
+  border: 6px solid #8a5f30;
+  outline: 2px solid #6d4a24;
+  border-radius: 22px;
+  background: #4a3122;
+  position: relative;
+}
+.booth::before, .booth::after {
+  content: ""; position: absolute; top: -12px; width: 18px; height: 18px; border-radius: 50%;
+  background: #4e8b4a; box-shadow: 0 2px 0 #356033;
+}
+.booth::before { left: 12px; }
+.booth::after { right: 12px; }
+.character { border-radius: 15px; }

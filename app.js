@@ -20,7 +20,7 @@ function preloadBlip() {
   try {
     ensureCtx();
     if (blipBuf) return;
-    fetch("blip.m4a?v=37")
+    fetch("blip.m4a?v=40")
       .then((r) => r.arrayBuffer())
       .then((b) => ac.decodeAudioData(b))
       .then((buf) => { blipBuf = buf; })
@@ -341,6 +341,57 @@ el("btn-skip").addEventListener("click", () => enterLetter());
 
 /* ---------- 场景三：狸克邮件 / 邀请函正文 ---------- */
 
+/* 行程卡：点一下复制地址 */
+const toastEl = el("toast");
+let toastTimer = 0;
+function toast(msg) {
+  toastEl.textContent = msg;
+  toastEl.classList.add("show");
+  window.clearTimeout(toastTimer);
+  toastTimer = window.setTimeout(() => toastEl.classList.remove("show"), 1700);
+}
+document.querySelectorAll(".plan-item").forEach((node) => {
+  node.addEventListener("click", async () => {
+    const addr = node.dataset.addr || "";
+    let ok = false;
+    try {
+      await navigator.clipboard.writeText(addr);
+      ok = true;
+    } catch (e) {
+      const ta = document.createElement("textarea");
+      ta.value = addr;
+      ta.readOnly = true;
+      ta.contentEditable = "true";
+      ta.style.cssText = "position:fixed;top:0;left:0;opacity:0";
+      document.body.appendChild(ta);
+      const range = document.createRange();
+      range.selectNodeContents(ta);
+      const sel = window.getSelection();
+      sel.removeAllRanges();
+      sel.addRange(range);
+      ta.setSelectionRange(0, addr.length);
+      try { ok = document.execCommand("copy"); } catch (e2) { ok = false; }
+      ta.remove();
+    }
+    toast(ok ? "地址已复制，去地图里粘贴就行" : "复制没成功，长按地址自己复制一下");
+  });
+});
+
+/* 照片：点开放大，再点收回 */
+const lightbox = el("lightbox");
+const lightboxImg = el("lightbox-img");
+document.querySelectorAll(".pol img").forEach((img) => {
+  img.addEventListener("click", () => {
+    lightboxImg.src = img.src;
+    lightbox.hidden = false;
+    requestAnimationFrame(() => lightbox.classList.add("open"));
+  });
+});
+lightbox.addEventListener("click", () => {
+  lightbox.classList.remove("open");
+  window.setTimeout(() => { lightbox.hidden = true; }, 220);
+});
+
 scenes.letter.addEventListener("scroll", () => {
   if (scenes.letter.scrollTop > 40) el("scroll-hint").classList.add("gone");
 }, { passive: true });
@@ -366,7 +417,7 @@ async function boot() {
   setSwitch(el("btn-sound"), true, "开", "关");
   video.muted = false;
 
-  const res = await fetch("sync.json?v=37");
+  const res = await fetch("sync.json?v=40");
   const data = await res.json();
   data.lines.forEach((l) => { l._times = lineTimes(l); });
   sync = data;
