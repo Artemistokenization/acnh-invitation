@@ -20,7 +20,7 @@ function preloadBlip() {
   try {
     ensureCtx();
     if (blipBuf) return;
-    fetch("blip.m4a?v=42")
+    fetch("blip.m4a?v=44")
       .then((r) => r.arrayBuffer())
       .then((b) => ac.decodeAudioData(b))
       .then((buf) => { blipBuf = buf; })
@@ -55,6 +55,16 @@ const scenes = {
 const state = { soundOn: true };
 const video = el("character");
 let sync = null;
+
+/* 视频默认 preload=metadata 不抢开场带宽；请柬升起后的空档再后台拉全片 */
+let videoPrefetched = false;
+function prefetchVideo() {
+  if (videoPrefetched) return;
+  videoPrefetched = true;
+  video.preload = "auto";
+  video.src = video.dataset.src;
+  video.load();
+}
 
 const iris = el("iris");
 const irisOK = typeof iris !== "undefined" && iris &&
@@ -188,6 +198,7 @@ function fire() {
       el("arrival-hint").hidden = true;
       el("btn-open").hidden = false;
       say("获得了一张请柬！", true);
+      prefetchVideo();
     }, 1980);
   });
 }
@@ -417,7 +428,7 @@ async function boot() {
   setSwitch(el("btn-sound"), true, "开", "关");
   video.muted = false;
 
-  const res = await fetch("sync.json?v=42");
+  const res = await fetch("sync.json?v=44");
   const data = await res.json();
   data.lines.forEach((l) => { l._times = lineTimes(l); });
   sync = data;
