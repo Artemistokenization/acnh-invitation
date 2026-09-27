@@ -16,15 +16,20 @@ function ensureCtx() {
   return ac;
 }
 
+/* 啾声音效内嵌为 base64：弱网下点击也能立刻出声，不再等网络 */
+const BLIP_B64 = "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";
+let blipDecoding = false;
 function preloadBlip() {
   try {
     ensureCtx();
-    if (blipBuf) return;
-    fetch("blip.m4a?v=44")
-      .then((r) => r.arrayBuffer())
-      .then((b) => ac.decodeAudioData(b))
+    if (blipBuf || blipDecoding) return;
+    blipDecoding = true;
+    const bin = atob(BLIP_B64);
+    const bytes = new Uint8Array(bin.length);
+    for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+    ac.decodeAudioData(bytes.buffer)
       .then((buf) => { blipBuf = buf; })
-      .catch(() => {});
+      .catch(() => { blipDecoding = false; });
   } catch (e) { /* 不支持则静默降级 */ }
 }
 
@@ -255,6 +260,7 @@ scenes.arrival.addEventListener("click", (e) => {
   if (arrivalStage === 0) {
     arrivalStage = 1;
     sling.classList.add("up");
+    prefetchVideo();
     say("再点一下，把气球射下来！");
   } else if (arrivalStage === 1) {
     fire();
@@ -408,6 +414,7 @@ scenes.letter.addEventListener("scroll", () => {
 }, { passive: true });
 
 function enterLetter() {
+  document.querySelectorAll(".pol img[data-src]").forEach((img) => { img.src = img.dataset.src; });
   cancelAnimationFrame(raf);
   el("scroll-hint").classList.remove("gone");
   paused = true;
@@ -428,7 +435,7 @@ async function boot() {
   setSwitch(el("btn-sound"), true, "开", "关");
   video.muted = false;
 
-  const res = await fetch("sync.json?v=44");
+  const res = await fetch("sync.json?v=45");
   const data = await res.json();
   data.lines.forEach((l) => { l._times = lineTimes(l); });
   sync = data;
